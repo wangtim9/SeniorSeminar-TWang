@@ -19,4 +19,4 @@ The attached CSV/Spreadsheet file is the result of sending out a google form and
 - Generate a schedule for the sessions and speakers, 
 - Create lists for each student so they know what sessions to attend, rooms and times.
 
-
+2/19/2026: made a successful class for making student objects, still working on making a popularity counter inside of the Sessions class instead of the Counter class by using the student object and for loops and arrays.
