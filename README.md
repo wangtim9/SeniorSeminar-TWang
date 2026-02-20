@@ -20,3 +20,4 @@ The attached CSV/Spreadsheet file is the result of sending out a google form and
 - Create lists for each student so they know what sessions to attend, rooms and times.
 
 2/19/2026: made a successful class for making student objects, still working on making a popularity counter inside of the Sessions class instead of the Counter class by using the student object and for loops and arrays.
+2/20/2026: made constructor for sessions and made arraylists for student and session objects to use later for optimization. Working on trying to make an efficient counter of how many people chose a seminar, but might just do popularity based on a score given for where in order from 1 - 5 a seminar was chosen.
