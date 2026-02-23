@@ -22,21 +22,22 @@ public class Student {
 		c5 = choice5;
 	}
 	//getters
-	public String getC1() {
-		return c1;
+	public String getChoices() {
+		return c1 + " " + c2 + " " + c3 + " " + c4 + " " + c5;
 	}
-	public String getC2() {
-		return c2;
-	}
-	public String getC3() {
-		return c3;
-	}
-	public String getC4() {
-		return c4;
-	}
-	public String getC5() {
-		return c5;
-	}
+	//public String getC2() {
+	//	return c2;
+	//}
+	//public String getC3() {
+	//	return c3;
+	//}
+	//public String getC4() {
+	//	return c4;
+	//}
+	//public String getC5() {
+	//	return c5;
+	//}
+	
 	public static void main(String[] args) {
 		//list of student objects
 		ArrayList<Student> StudentList = new ArrayList<Student>();
@@ -48,7 +49,7 @@ public class Student {
 				Student Child = new Student(Sdata[0], Sdata[1], Sdata[2], Sdata[3], Sdata[4], Sdata[5]);
 				StudentList.add(Child);
 			}
-			System.out.println(StudentList.size());
+			System.out.println((StudentList.get(0)).getChoices());
 		}
 		catch(FileNotFoundException e) {
 			System.out.println("File not Found");
