@@ -37,7 +37,7 @@ public class Student {
 	//public String getC5() {
 	//	return c5;
 	//}
-	
+	//scanner used to create list of students in program
 	public static void main(String[] args) {
 		//list of student objects
 		ArrayList<Student> StudentList = new ArrayList<Student>();
@@ -62,4 +62,5 @@ public class Student {
 		//return (SN + " " + c1 + " " + c2 + " " + c3 + " " + c4 + " " + c5);
 	//}
 }			
+
 
