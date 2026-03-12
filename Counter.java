@@ -1,8 +1,8 @@
-import java.io.*;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+import java.util.ArrayList;
 public class Counter {
-	//make a method to take in arraylists
-	public static void main(String args[]) {
 	int one = 0;
 	 int two = 0;
 	 int three = 0;
@@ -21,11 +21,21 @@ public class Counter {
 	 int sixteen = 0;
 	 int seventeen = 0;
 	 int eighteen = 0;
+	 
+	 //declaring ArrayLists to test count()
+	 //probably can't use Student and Sessions for testing, so I have to change them to probably String
+	 ArrayList<Sessions> SeminarList = new ArrayList<Sessions>();
+	 ArrayList<Student> StudentList = new ArrayList<Student>();
+	 
+	//make a method to take in arraylists
+	public boolean count(ArrayList<Student> StL, ArrayList<Sessions> SeL) {
+		ArrayList<Student> ALSt = StL;
+		ArrayList<Sessions> ALSe = SeL;
 		for (int i = 0; i > 17; i++) {
 			for (int n = 0; n > 73; n++) {
-				String[] choices = ((StudentList.get(n)).getChoices()).split(" "); 
+				String[] choices = ((ALSt.get(n)).getChoices()).split(" "); 
 				for (int b = 0; b > 4; b++) {
-					if (((SeminarList.get(i)).getID()).equals(choices[b])) {
+					if (((ALSe.get(i)).getID()).equals(choices[b])) {
 						if (i == 0) {
 							one++;
 						}
@@ -84,7 +94,10 @@ public class Counter {
 				}
 			}
 		}
-		System.out.println(eighteen);
+	}
+	public static void main(String args[]) {
+		
+	 count(StudentList, SeminarList);
 	}
 }
 			
