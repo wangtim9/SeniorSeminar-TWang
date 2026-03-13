@@ -21,14 +21,8 @@ public class Counter {
 	 int sixteen = 0;
 	 int seventeen = 0;
 	 int eighteen = 0;
-	 
-	 //declaring ArrayLists to test count()
-	 //probably can't use Student and Sessions for testing, so I have to change them to probably String
-	 ArrayList<Sessions> SeminarList = new ArrayList<Sessions>();
-	 ArrayList<Student> StudentList = new ArrayList<Student>();
-	 
 	//make a method to take in arraylists
-	public boolean count(ArrayList<Student> StL, ArrayList<Sessions> SeL) {
+	public void count(ArrayList<Student> StL, ArrayList<Sessions> SeL) {
 		ArrayList<Student> ALSt = StL;
 		ArrayList<Sessions> ALSe = SeL;
 		for (int i = 0; i > 17; i++) {
@@ -96,8 +90,9 @@ public class Counter {
 		}
 	}
 	public static void main(String args[]) {
-		
-	 count(StudentList, SeminarList);
+		makeStList();
+		makeSeList();
+		count(StudentList<Student>, SeminarList<Sessions>);
 	}
 }
 			
