@@ -78,10 +78,10 @@ public class SeniorSeminar {
 	 int eighteen = 0;
 		ArrayList<Student> ALSt = StL;
 		ArrayList<Sessions> ALSe = SeL;
-		for (int i = 0; i > 17; i++) {
-			for (int n = 0; n > 73; n++) {
+		for (int i = 0; i < 17; i++) {
+			for (int n = 0; n < 73; n++) {
 				String[] choices = ((ALSt.get(n)).getChoices()).split(" "); 
-				for (int b = 0; b > 4; b++) {
+				for (int b = 0; b < 4; b++) {
 					if (((ALSe.get(i)).getID()).equals(choices[b])) {
 						if (i == 0) {
 							one++;
@@ -141,8 +141,9 @@ public class SeniorSeminar {
 				}
 			}
 		}
-		System.out.println(fifteen);
+		System.out.println(two);
 	}
+	public void make
 }
 
 
@@ -173,15 +174,17 @@ class Student {
 	private String c3;
 	private String c4;
 	private String c5;
+	private String[] schedule;
 	//student object with thier name, and choices
 	//choices used for counting the popularity of each seminar
-	public Student(String Sname, String choice1, String choice2, String choice3, String choice4, String choice5) {
+	public Student(String Sname, String choice1, String choice2, String choice3, String choice4, String choice5, String[] schedule) {
 		SN = Sname;
 		c1 = choice1;
 		c2 = choice2;
 		c3 = choice3;
 		c4 = choice4;
 		c5 = choice5;
+		Schedule = schedule;
 	}
 	//getters
 	public String getChoices() {
