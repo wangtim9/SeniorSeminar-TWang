@@ -11,7 +11,6 @@ public class SeniorSeminar {
 	public SeniorSeminar(ArrayList<Student> StdList, ArrayList<Sessions> SemList) {
 		StudentList = new ArrayList<Student>();
 		SeminarList = new ArrayList<Sessions>();
-		//ArrayList[][] schedule = new ArrayList[5][5];
 	}
 	//getter for list of students
 	public ArrayList<Student> getStudentList() {
@@ -24,13 +23,13 @@ public class SeniorSeminar {
 	//fills arraylist of students with info from file with all the students and their choice
 	public void makeStList(ArrayList<Student> studentlist) {
 		//list of student objects
-		//ArrayList<Student> StudentList = new ArrayList<Student>();
 		File Students = new File("StudentObject.txt");
 		try (Scanner Scan = new Scanner(Students)) {
 			while (Scan.hasNextLine()) {
 				String SData = Scan.nextLine();
 				String[] Sdata = SData.split("	");
-				Student Child = new Student(Sdata[0], Sdata[1], Sdata[2], Sdata[3], Sdata[4], Sdata[5]);
+				String[] child_schedule = new String[5];
+				Student Child = new Student(Sdata[0], Sdata[1], Sdata[2], Sdata[3], Sdata[4], Sdata[5], child_schedule);
 				studentlist.add(Child);
 			}
 		}
@@ -56,125 +55,157 @@ public class SeniorSeminar {
 		}
 	}
 	//counter for popularity ranking
-	public void count(ArrayList<Student> StL, ArrayList<Sessions> SeL) {
-		int one = 0;
-	 int two = 0;
-	 int three = 0;
-	 int four = 0;
-	 int five = 0;
-	 int six = 0;
-	 int seven = 0;
-	 int eight = 0;
-	 int nine = 0;
-	 int ten = 0;
-	 int eleven = 0;
-	 int twelve = 0;
-	 int thirteen = 0;
-	 int fourteen = 0;
-	 int fifteen = 0;
-	 int sixteen = 0;
-	 int seventeen = 0;
-	 int eighteen = 0;
-	 ArrayList<Integer> numbers = {one, two, three, four, five, six, seven, eight, nine, ten, eleven, twelve, thirteen, fourteen, fifteen, sixteen, seveneen, eighteen};
+	public void count(int[] NUMS, ArrayList<Student> StL, ArrayList<Sessions> SeL) {
+	 int[] Num = NUMS;
 		ArrayList<Student> ALSt = StL;
 		ArrayList<Sessions> ALSe = SeL;
-		for (int i = 0; i < 17; i++) {
+		for (int i = 0; i < 18; i++) {
 			for (int n = 0; n < 73; n++) {
 				String[] choices = ((ALSt.get(n)).getChoices()).split(" "); 
 				for (int b = 0; b < 4; b++) {
 					if (((ALSe.get(i)).getID()).equals(choices[b])) {
 						if (i == 0) {
-							one++;
+							Num[0]++;
 						}
 						else if (i == 1) {
-							two++;
+							Num[1]++;
 						}
 						else if (i == 2) {
-							three++;
+							Num[2]++;
 						}
 						else if (i == 3) {
-							four++;
+							Num[3]++;
 						}
 						else if (i == 4) {
-							five++;
+							Num[4]++;
 						}
 						else if (i == 5) {
-							six++;
+							Num[5]++;
 						}
 						else if (i == 6) {
-							seven++;
+							Num[6]++;
 						}
 						else if (i == 7) {
-							eight++;
+							Num[7]++;
 						}
 						else if (i == 8) {
-							nine++;
+							Num[8]++;
 						}
 						else if (i == 9) {
-							ten++;
+							Num[9]++;
 						}
 						else if (i == 10) {
-							eleven++;
+							Num[10]++;
 						}
 						else if (i == 11) {
-							twelve++;
+							Num[11]++;
 						}
 						else if (i == 12) {
-							thirteen++;
+							Num[12]++;
 						}
 						else if (i == 13) {
-							fourteen++;
+							Num[13]++;
 						}
 						else if (i == 14) {
-							fifteen++;
+							Num[14]++;
 						}
 						else if (i == 15) {
-							sixteen++;
+							Num[15]++;
 						}
 						else if (i == 16) {
-							seventeen++;
+							Num[16]++;
 						}
 						else if (i == 17) {
-							eighteen++;
+							Num[17]++;
 						}
 					}
 				}
 			}
 		}
-		//System.out.println(two);
+		/*
+		System.out.println(Num[0]);
 		int temp;
 		for (int i = 0; i < 16; i++) {
-			for (j = 0; j < 16 - i; j++) {
-				if (numbers.get(j) < numbers.get(j+1) {
+			for (int j = 0; j < 16; j++) {
+				if (Num[j] < Num[j+1]) {
 					temp = j;
-					numbers.set(i, numbers.get(j+1);
-					numbers.set(j+1, numbers.get(temp);
+					Num[j] = Num[j+1];
+					Num[j+1] = Num[temp];
 				}
 			}
 		}
-		while (numbers.size() < 25) {
-			for (int i = 0; i < numbers.size(); i++) {
-				numbers.add(numbers.get(i));
+		while (Num[24] == 0) {
+			for (int i = 0; i < 7; i++) {
+				Num[18+i] = Num[0+i];
 			}
 		}
+		*/
 	}
-	ArrayList<ArrayList<>> schedule = new ArrayList<>(); //maybe put in the main class
-	public void makeschedule(ArrayList<Integer> nums, ArrayList<Sessions> SEL) {
-		ArrayList<Integer> num = nums;
+	public void order(ArrayList<Session2> Seminars2) {
+		ArrayList<Session2> Se2= Seminars2;
+		Session2 temp;
+		for (int i = 0; i < 17; i++) {
+			for (int j = 0; j < 17 - i; j++) {
+				if ((Se2.get(j)).getPopularity() < (Se2.get(j+1)).getPopularity()) {
+					temp = Se2.get(j);
+					Se2.set(j, Se2.get(j+1));
+					Se2.set(j+1, temp);
+				}
+			}
+		}
+		for (int d = 0; d < 7; d++) {
+			Se2.add(Se2.get(d));
+		}
+	}
+	
+	public void makeschedule(ArrayList<Session2> Sem2, ArrayList<Sessions> SEL, ArrayList<ArrayList<Sessions>> Schedule) {
+		ArrayList<Session2> SE2 = Sem2;
 		ArrayList<Sessions> SE = SEL;
-		int count = 0;
+		ArrayList<ArrayList<Sessions>> The_Schedule = Schedule;
+		int count2 = 0;
+		int count3 = 0;
+		Session2 temp2;
 		for (int i = 0; i < 5; i++) {
-			for (int j = 0; j < 5; j++) {
-				while (count = 0) {
-					for (int l = 0; l < SE.size(); l++) {
-						if (Integer.parseInt(AlSe.get(l).getID()) = num.get(0) && SE.get(l).get) {
-							schedule.get(i).get(j) = AlSe.get(l);
-							num.remove(0);
-							count++;
+			int prevSize = -1;
+			count2 = 0;
+			while (count2 < 5) {
+				int currentSize = The_Schedule.get(i).size();
+				if (currentSize == prevSize) break; // stops if no progress is made
+				prevSize = currentSize;
+				outer:
+					for (int y = 0; y < SE.size(); y++){
+						if (((SE2.get(0)).getID2()).equals((SE.get(y)).getID())) {
+							if ((The_Schedule.get(i)).size() == 0) {
+								(The_Schedule.get(i)).add(SE.get(y));
+								System.out.println((SE2.get(0)).getID2());
+								SE2.remove(0);
+								count2++;
+							}
+							else {
+								count3 = 0;
+								for (int l = 0; l < (The_Schedule.get(i)).size(); l++) {
+									if (((SE2.get(0)).getID2()).equals((The_Schedule.get(i).get(l)).getID())) {
+										
+									}
+									else {
+										count3++;
+									}
+								}
+									if (count3 == (The_Schedule.get(i)).size()) {
+										(The_Schedule.get(i)).add(SE.get(y));
+										System.out.println((SE2.get(0)).getID2());
+										SE2.remove(0);
+										count2++;
+									}
+									if (count2 >= 5) {
+										break outer;
+									}
+								}
+							}
 						}
 					}
-						
-					
+				}
+			}
 }
 
 
@@ -182,7 +213,8 @@ public class SeniorSeminar {
 class Sessions {
 	private String Seminar_name;
 	private String SeminarID;
-	piravte String Seminar_speaker
+	private String Seminar_speaker;
+	private int size;
 	public Sessions(String name, String ID, String speaker) {
 		Seminar_name = name;
 		SeminarID = ID;
@@ -213,14 +245,14 @@ class Student {
 	private String[] student_schedule;
 	//student object with thier name, and choices
 	//choices used for counting the popularity of each seminar
-	public Student(String Sname, String choice1, String choice2, String choice3, String choice4, String choice5, String[] student_schedule) {
+	public Student(String Sname, String choice1, String choice2, String choice3, String choice4, String choice5, String[] student_Schedule) {
 		SN = Sname;
 		c1 = choice1;
 		c2 = choice2;
 		c3 = choice3;
 		c4 = choice4;
 		c5 = choice5;
-		student_Schedule = student_schedule;
+		student_schedule = student_Schedule;
 	}
 	//getters
 	public String getChoices() {
@@ -243,4 +275,21 @@ class Student {
 	public String toString() {
 		return (SN + " " + c1 + " " + c2 + " " + c3 + " " + c4 + " " + c5);
 	}			
+}
+
+class Session2 {
+	private String SeminarID2;
+	private int popularity;
+	
+	public Session2(String ID2, int people) {
+		SeminarID2 = ID2;
+		popularity = people;
+	}
+	
+	public String getID2() {
+		return SeminarID2;
+	}
+	public int getPopularity() {
+		return popularity;
+	}
 }
