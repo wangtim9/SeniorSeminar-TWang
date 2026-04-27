@@ -45,7 +45,8 @@ public class SeniorSeminar {
 			while (Scan.hasNextLine()) {
 				String data = Scan.nextLine();
 				String[] IDs = data.split(",");
-				Sessions Seminar = new Sessions(IDs[0], IDs[1], IDs[2]);
+				ArrayList<String> attendeee_list = new ArrayList<String>();
+				Sessions Seminar = new Sessions(IDs[0], IDs[1], IDs[2], attendee_list);
 				sel.add(Seminar);
 			}
 			//System.out.println((SeminarList.get(0)).getName());
@@ -60,7 +61,7 @@ public class SeniorSeminar {
 		ArrayList<Student> ALSt = StL;
 		ArrayList<Sessions> ALSe = SeL;
 		for (int i = 0; i < 18; i++) {
-			for (int n = 0; n < 73; n++) {
+			for (int n = 0; n < 74; n++) {
 				String[] choices = ((ALSt.get(n)).getChoices()).split(" "); 
 				for (int b = 0; b < 4; b++) {
 					if (((ALSe.get(i)).getID()).equals(choices[b])) {
@@ -122,24 +123,6 @@ public class SeniorSeminar {
 				}
 			}
 		}
-		/*
-		System.out.println(Num[0]);
-		int temp;
-		for (int i = 0; i < 16; i++) {
-			for (int j = 0; j < 16; j++) {
-				if (Num[j] < Num[j+1]) {
-					temp = j;
-					Num[j] = Num[j+1];
-					Num[j+1] = Num[temp];
-				}
-			}
-		}
-		while (Num[24] == 0) {
-			for (int i = 0; i < 7; i++) {
-				Num[18+i] = Num[0+i];
-			}
-		}
-		*/
 	}
 	public void order(ArrayList<Session2> Seminars2) {
 		ArrayList<Session2> Se2= Seminars2;
@@ -184,8 +167,10 @@ public class SeniorSeminar {
 							else {
 								count3 = 0;
 								for (int l = 0; l < (The_Schedule.get(i)).size(); l++) {
-									if (((SE2.get(0)).getID2()).equals((The_Schedule.get(i).get(l)).getID())) {
-										
+									if (((SE2.get(0)).getID2()).equals((The_Schedule.get(i).get(l)).getID()) || ((SE2.get(0)).getSpeaker2()).equals((The_Schedule.get(i).get(l)).getSpeaker())) {
+										temp2 = SE2.get(0);
+                                        SE2.set(0, SE2.get(1));
+                                        SE2.set(1, temp2);
 									}
 									else {
 										count3++;
@@ -206,6 +191,20 @@ public class SeniorSeminar {
 					}
 				}
 			}
+	public void placeStudents(ArrayList<ArrayList<Sessions>> sChedule, ArrayList<Student> Students) {
+		ArrayList<ArrayList<Sessions>> O_schedule = sChedule;
+		ArrayList<Student> students = Students;
+		for (int i = 0; i < students.size(); i++) {
+			String[] choices = ((students.get(i)).getChoices()).split(" ");
+			for (int y = 0; y < choices.length; y++) {
+				for (int j; j < O_schedule.size(); j++) {
+					for (int a; a < (O_schedule.get(j)).size(); a++) {
+						if (choices[y].equals(((O_schedule.get(j)).get(a)).getID())) {
+							
+		}
+	}
+			
+		
 }
 
 
@@ -214,11 +213,12 @@ class Sessions {
 	private String Seminar_name;
 	private String SeminarID;
 	private String Seminar_speaker;
-	private int size;
-	public Sessions(String name, String ID, String speaker) {
+	private String[] attendess;
+	public Sessions(String name, String ID, String speaker, String[] Attendees) {
 		Seminar_name = name;
 		SeminarID = ID;
 		Seminar_speaker = speaker;
+		attendees = Attendees;
 	}
 	//getters
 	public String getName() {
@@ -242,10 +242,10 @@ class Student {
 	private String c3;
 	private String c4;
 	private String c5;
-	private String[] student_schedule;
+	private ArrayList<String> student_schedule;
 	//student object with thier name, and choices
 	//choices used for counting the popularity of each seminar
-	public Student(String Sname, String choice1, String choice2, String choice3, String choice4, String choice5, String[] student_Schedule) {
+	public Student(String Sname, String choice1, String choice2, String choice3, String choice4, String choice5, ArrayList<String> student_Schedule) {
 		SN = Sname;
 		c1 = choice1;
 		c2 = choice2;
@@ -258,19 +258,10 @@ class Student {
 	public String getChoices() {
 		return c1 + " " + c2 + " " + c3 + " " + c4 + " " + c5;
 	}
-	//public String getC2() {
-	//	return c2;
-	//}
-	//public String getC3() {
-	//	return c3;
-	//}
-	//public String getC4() {
-	//	return c4;
-	//}
-	//public String getC5() {
-	//	return c5;
-	//}
 	
+	public String[] getSchedule() {
+		return student_schedule;
+	}
 	
 	public String toString() {
 		return (SN + " " + c1 + " " + c2 + " " + c3 + " " + c4 + " " + c5);
@@ -280,10 +271,12 @@ class Student {
 class Session2 {
 	private String SeminarID2;
 	private int popularity;
+	private String Seminar_speaker2;
 	
-	public Session2(String ID2, int people) {
+	public Session2(String ID2, int people, String speaker2) {
 		SeminarID2 = ID2;
 		popularity = people;
+		Seminar_speaker2 = speaker2;
 	}
 	
 	public String getID2() {
@@ -291,5 +284,8 @@ class Session2 {
 	}
 	public int getPopularity() {
 		return popularity;
+	}
+	public String getSpeaker2() {
+		return Seminar_speaker2;
 	}
 }
