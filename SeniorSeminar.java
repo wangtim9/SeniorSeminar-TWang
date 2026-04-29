@@ -155,11 +155,13 @@ public class SeniorSeminar {
 		int temp;
 		int ok = 0;
 		int count2 = 0;
+		//going through every student
 		for (int i = 0; i < students.size(); i++) {
 			int prevSize = 0;
 			int currentSize = 0;
 			String[] choices = ((students.get(i)).getChoices()).split(" ");
 			count2 = 0;
+			//going through all their choices
 			for (int y = 0; y < choices.length; y++) {
 				count = 0;
 				int max = 50;
@@ -171,8 +173,10 @@ public class SeniorSeminar {
 					prevSize = currentSize;
 					currentSize = ((students.get(i)).getSchedule()).size();
 					outer:
+					//going through every row
 					for (int j = 0; j < O_schedule.size(); j++) {
 						count = 0;
+						//going through every seminar in that row
 						for (int a = 0; a < (O_schedule.get(j)).size(); a++) {
 							if (choices[y].equals(((O_schedule.get(j)).get(a)).getID())) {
 								//(((O_schedule.get(j)).get(a)).getAttendees()).add((students.get(i)).getStudentName());
@@ -242,7 +246,7 @@ class Sessions {
 		Seminar_speaker = speaker;
 		attendees = Attendees;
 	}
-	
+	//to make a deep copy
 	public Sessions(Sessions original) {
 		this.Seminar_name = original.getName();
 		this.SeminarID = original.getID();
