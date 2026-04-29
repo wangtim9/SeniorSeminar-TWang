@@ -28,7 +28,7 @@ public class SeniorSeminar {
 			while (Scan.hasNextLine()) {
 				String SData = Scan.nextLine();
 				String[] Sdata = SData.split("	");
-				String[] child_schedule = new String[5];
+				ArrayList<String> child_schedule = new ArrayList<String>();
 				Student Child = new Student(Sdata[0], Sdata[1], Sdata[2], Sdata[3], Sdata[4], Sdata[5], child_schedule);
 				studentlist.add(Child);
 			}
@@ -37,15 +37,14 @@ public class SeniorSeminar {
 			System.out.println("File not Found");
 		}
 	}
-	//fills arraylist of sessions with infromf rom file with all the session's id and speaker
+	//fills arraylist of sessions with info from file with all the session's id and speaker
 		public void makeSeList(ArrayList<Sessions> sel) {
-		//ArrayList<Sessions> SeminarList = new ArrayList<Sessions>();
 		File Seminars = new File("seminars.txt");
 		try (Scanner Scan = new Scanner(Seminars)) {
 			while (Scan.hasNextLine()) {
 				String data = Scan.nextLine();
 				String[] IDs = data.split(",");
-				ArrayList<String> attendeee_list = new ArrayList<String>();
+				ArrayList<String> attendee_list = new ArrayList<String>();
 				Sessions Seminar = new Sessions(IDs[0], IDs[1], IDs[2], attendee_list);
 				sel.add(Seminar);
 			}
@@ -65,65 +64,13 @@ public class SeniorSeminar {
 				String[] choices = ((ALSt.get(n)).getChoices()).split(" "); 
 				for (int b = 0; b < 4; b++) {
 					if (((ALSe.get(i)).getID()).equals(choices[b])) {
-						if (i == 0) {
-							Num[0]++;
-						}
-						else if (i == 1) {
-							Num[1]++;
-						}
-						else if (i == 2) {
-							Num[2]++;
-						}
-						else if (i == 3) {
-							Num[3]++;
-						}
-						else if (i == 4) {
-							Num[4]++;
-						}
-						else if (i == 5) {
-							Num[5]++;
-						}
-						else if (i == 6) {
-							Num[6]++;
-						}
-						else if (i == 7) {
-							Num[7]++;
-						}
-						else if (i == 8) {
-							Num[8]++;
-						}
-						else if (i == 9) {
-							Num[9]++;
-						}
-						else if (i == 10) {
-							Num[10]++;
-						}
-						else if (i == 11) {
-							Num[11]++;
-						}
-						else if (i == 12) {
-							Num[12]++;
-						}
-						else if (i == 13) {
-							Num[13]++;
-						}
-						else if (i == 14) {
-							Num[14]++;
-						}
-						else if (i == 15) {
-							Num[15]++;
-						}
-						else if (i == 16) {
-							Num[16]++;
-						}
-						else if (i == 17) {
-							Num[17]++;
-						}
+						Num[i]++;
 					}
 				}
 			}
 		}
 	}
+	//reorganizing from most popular to least popular
 	public void order(ArrayList<Session2> Seminars2) {
 		ArrayList<Session2> Se2= Seminars2;
 		Session2 temp;
@@ -136,6 +83,7 @@ public class SeniorSeminar {
 				}
 			}
 		}
+		//adds to the end the most popular until list reaches 25 objects
 		for (int d = 0; d < 7; d++) {
 			Se2.add(Se2.get(d));
 		}
@@ -159,8 +107,16 @@ public class SeniorSeminar {
 					for (int y = 0; y < SE.size(); y++){
 						if (((SE2.get(0)).getID2()).equals((SE.get(y)).getID())) {
 							if ((The_Schedule.get(i)).size() == 0) {
-								(The_Schedule.get(i)).add(SE.get(y));
-								System.out.println((SE2.get(0)).getID2());
+								//have to add a deep copy instead that doesnt point to the same location
+								if (SE2.size() <= 7) {
+									Sessions copy2 = new Sessions(SE.get(y));
+									(The_Schedule.get(i)).add(copy2);
+								}
+								else {
+									Sessions copy = new Sessions(SE.get(y));
+									(The_Schedule.get(i)).add(copy);
+								}
+								//System.out.println((SE2.get(0)).getID2());
 								SE2.remove(0);
 								count2++;
 							}
@@ -177,8 +133,9 @@ public class SeniorSeminar {
 									}
 								}
 									if (count3 == (The_Schedule.get(i)).size()) {
-										(The_Schedule.get(i)).add(SE.get(y));
-										System.out.println((SE2.get(0)).getID2());
+										Sessions copy = new Sessions(SE.get(y));
+										(The_Schedule.get(i)).add(copy);
+										//System.out.println((SE2.get(0)).getID2());
 										SE2.remove(0);
 										count2++;
 									}
@@ -194,17 +151,82 @@ public class SeniorSeminar {
 	public void placeStudents(ArrayList<ArrayList<Sessions>> sChedule, ArrayList<Student> Students) {
 		ArrayList<ArrayList<Sessions>> O_schedule = sChedule;
 		ArrayList<Student> students = Students;
+		int count = 0;
+		int temp;
+		int ok = 0;
+		int count2 = 0;
 		for (int i = 0; i < students.size(); i++) {
+			int prevSize = 0;
+			int currentSize = 0;
 			String[] choices = ((students.get(i)).getChoices()).split(" ");
+			count2 = 0;
 			for (int y = 0; y < choices.length; y++) {
-				for (int j; j < O_schedule.size(); j++) {
-					for (int a; a < (O_schedule.get(j)).size(); a++) {
-						if (choices[y].equals(((O_schedule.get(j)).get(a)).getID())) {
-							
+				count = 0;
+				int max = 50;
+				int loopcount = 0;
+				while (count2 < 1) {
+					if (loopcount == max) {
+						break;
+					}
+					prevSize = currentSize;
+					currentSize = ((students.get(i)).getSchedule()).size();
+					outer:
+					for (int j = 0; j < O_schedule.size(); j++) {
+						count = 0;
+						for (int a = 0; a < (O_schedule.get(j)).size(); a++) {
+							if (choices[y].equals(((O_schedule.get(j)).get(a)).getID())) {
+								//(((O_schedule.get(j)).get(a)).getAttendees()).add((students.get(i)).getStudentName());
+								//((students.get(i)).getSchedule()).add(((O_schedule.get(j)).get(a)).getID());
+								//ok = a;
+								count = 1;
+								if (count == 1) {
+									if ((((O_schedule.get(j)).get(a)).getAttendees()).size() < 16) {
+										(((O_schedule.get(j)).get(a)).getAttendees()).add((students.get(i)).getStudentName());
+										((students.get(i)).getSchedule()).add(((O_schedule.get(j)).get(a)).getID());;
+										break;
+									}
+									else {
+										continue;
+									}
+								}
+							}
+								
+						}
+						if (count == 0) {
+							//randomize which class from time slot to put student in if none in that time slot align with their choice
+							temp = (int)(Math.random() * (O_schedule.get(j)).size());
+							boolean duplicate = true;
+							int Loop = 0;
+							//attempting to not add dupliactes to student's schedule
+							while (duplicate) {
+								Loop++;
+								if (Loop == 50) {
+									break;
+								}
+								duplicate = false;
+								for (int e = 0; e < ((students.get(i)).getSchedule()).size(); e++) {
+									if ((((O_schedule.get(j)).get(temp)).getID()).equals(((students.get(i)).getSchedule()).get(e))) {
+										duplicate = true;
+										break;
+									}
+								}
+								if (duplicate) {
+									temp = (int)(Math.random() * (O_schedule.get(j)).size());
+								}
+								else {		
+									if ((((O_schedule.get(j)).get(temp)).getAttendees()).size() < 16) {
+										(((O_schedule.get(j)).get(temp)).getAttendees()).add((students.get(i)).getStudentName());
+										((students.get(i)).getSchedule()).add(((O_schedule.get(j)).get(temp)).getID());
+										count2++;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
-			
-		
 }
 
 
@@ -213,12 +235,19 @@ class Sessions {
 	private String Seminar_name;
 	private String SeminarID;
 	private String Seminar_speaker;
-	private String[] attendess;
-	public Sessions(String name, String ID, String speaker, String[] Attendees) {
+	private ArrayList<String> attendees;
+	public Sessions(String name, String ID, String speaker, ArrayList<String> Attendees) {
 		Seminar_name = name;
 		SeminarID = ID;
 		Seminar_speaker = speaker;
 		attendees = Attendees;
+	}
+	
+	public Sessions(Sessions original) {
+		this.Seminar_name = original.getName();
+		this.SeminarID = original.getID();
+		this.Seminar_speaker = original.getSpeaker();
+		this.attendees = original.getAttendees();
 	}
 	//getters
 	public String getName() {
@@ -229,6 +258,9 @@ class Sessions {
 	} 
 	public String getSpeaker() {
 		return Seminar_speaker;
+	}
+	public ArrayList<String> getAttendees() {
+		return attendees;
 	}
 }
 			
@@ -259,15 +291,19 @@ class Student {
 		return c1 + " " + c2 + " " + c3 + " " + c4 + " " + c5;
 	}
 	
-	public String[] getSchedule() {
+	public ArrayList<String> getSchedule() {
 		return student_schedule;
+	}
+	
+	public String getStudentName() {
+		return SN;
 	}
 	
 	public String toString() {
 		return (SN + " " + c1 + " " + c2 + " " + c3 + " " + c4 + " " + c5);
 	}			
 }
-
+//used to make a separate list of sessions to compare to the original arraylist of sessions
 class Session2 {
 	private String SeminarID2;
 	private int popularity;
